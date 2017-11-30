@@ -14,7 +14,7 @@ class PhoneInfoForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(PhoneInfoForm, self).__init__(*args, **kwargs)
         self.fields['country_code'].error_messages = {
-            "required": _('Please enter your country code.')
+            "required": _('Please select your country code from the list.')
         }
         self.fields['phone_number'].error_messages = {
             "required": _('Please enter your phone number'),
