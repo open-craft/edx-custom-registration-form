@@ -1,3 +1,4 @@
+import json
 import unittest
 from django.conf import settings
 from django.test import TestCase
@@ -28,3 +29,12 @@ class PhoneFormTest(TestCase):
         form_data = {"country_code": "1", "phone_number": "206-555-5555"}
         form = PhoneInfoForm(data=form_data)
         self.assertTrue(form.is_valid())
+
+    def test_phone_form_submit(self):
+        """Ensure that form properly requires phone and country_code"""
+        response = self.client.post(reverse('user_api_registration'))
+        response_content = json.loads(response.content)
+        self.assertEquals(response_content.get("country_code"),
+                          [dict(user_message="Please select your country code from the list.")])
+        self.assertEquals(response_content.get("phone_number"),
+                          [dict(user_message="Please enter your phone number")])
